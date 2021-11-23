@@ -1,16 +1,32 @@
 package com.example.codeclan.files_and_folders.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"users"})
     private List<Folder> folders;
 
-    public User(String name, List<Folder> folders) {
+    public User(String name) {
         this.name = name;
-        this.folders = folders;
+        this.folders = new ArrayList<>();
+    }
+
+    public User() {
+
     }
 
     public Long getId() {
@@ -35,5 +51,9 @@ public class User {
 
     public void setFolders(List<Folder> folders) {
         this.folders = folders;
+    }
+
+    public void addFolder(Folder folder) {
+        this.folders.add(folder);
     }
 }
