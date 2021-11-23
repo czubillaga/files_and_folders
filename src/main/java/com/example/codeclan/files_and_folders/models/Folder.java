@@ -16,12 +16,12 @@ public class Folder {
     private Long id;
     @Column(name = "title")
     private String title;
-    @JsonIgnoreProperties({"folders"})
+    @JsonIgnoreProperties({"folder"})
     @OneToMany(mappedBy = "folder")
     private List<File> files;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnoreProperties({"folders"})
+    @JsonIgnoreProperties({"folders", "user"})
     private User user;
 
     public Folder(String title, User user) {
